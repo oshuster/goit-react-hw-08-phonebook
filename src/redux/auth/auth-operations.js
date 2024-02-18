@@ -5,6 +5,7 @@ import {
   signUpRequest,
   logInRequest,
   checkTokenRequest,
+  logOutRequest,
 } from 'api/auth-service';
 
 export const signUp = createAsyncThunk(
@@ -46,7 +47,6 @@ export const current = createAsyncThunk(
     try {
       const { auth } = getState();
       const response = await checkTokenRequest(auth.token);
-      console.log(response.data);
       return response.data;
     } catch (error) {
       console.error(error.message);
@@ -61,5 +61,18 @@ export const current = createAsyncThunk(
         return false;
       }
     },
+  }
+);
+
+export const logOut = createAsyncThunk(
+  'auth/logOut',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await logOutRequest();
+      return response.data;
+    } catch (error) {
+      console.error(error.message);
+      return rejectWithValue(error.response.data.message);
+    }
   }
 );

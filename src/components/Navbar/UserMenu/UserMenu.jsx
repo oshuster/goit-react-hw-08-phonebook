@@ -1,9 +1,15 @@
 import { Avatar, Box, Button, Flex, Text } from '@chakra-ui/react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectUser } from '../../../redux/auth/auth-selectors';
+import { logOut } from '../../../redux/auth/auth-operations';
 
 const UserMenu = () => {
   const { email } = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  const handleLogOut = () => {
+    dispatch(logOut());
+  };
 
   return (
     <Flex>
@@ -16,9 +22,7 @@ const UserMenu = () => {
           colorScheme="teal"
           size="xs"
           variant="outline"
-          onClick={() => {
-            console.log('click xD');
-          }}
+          onClick={handleLogOut}
         >
           Logout
         </Button>

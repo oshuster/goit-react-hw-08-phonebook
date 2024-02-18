@@ -1,4 +1,3 @@
-// https://connections-api.herokuapp.com/users/signup
 import axios from 'axios';
 
 const authInstance = axios.create({
@@ -6,18 +5,38 @@ const authInstance = axios.create({
   timeout: 15000,
 });
 
-export const signUpRequest = body => authInstance.post('/users/signup', body);
+const setToken = token => {
+  if (token) {
+    return (authInstance.defaults.headers.authorization = `Bearer ${token}`);
+  } else {
+    authInstance.defaults.headers.authorization = '';
+  }
+};
 
-export const logInRequest = body => authInstance.post('/users/login', body);
+export const signUpRequest = async body => {
+  const response = await authInstance.post('/users/signup', body);
+  setToken(response.data.token);
+  return response;
+};
+
+export const logInRequest = async body => {
+  const response = await authInstance.post('/users/login', body);
+  setToken(response.data.token);
+  return response;
+};
 
 export const checkTokenRequest = async token => {
-  authInstance.defaults.headers.authorization = `Bearer ${token}`;
+  setToken(token);
   try {
     const response = await authInstance('/users/current');
-    console.log(response);
     return response;
   } catch (error) {
-    authInstance.defaults.headers.authorization = '';
+    setToken();
     throw error;
   }
+};
+
+export const logOutRequest = async () => {
+  const response = await authInstance.post('/users/logout');
+  return response;
 };
