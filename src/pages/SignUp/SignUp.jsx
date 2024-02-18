@@ -11,7 +11,6 @@ import {
 } from '../../redux/auth/auth-selectors';
 
 import styles from './signup.module.css';
-import { useState } from 'react';
 
 const SignUpPage = () => {
   const authLoading = useSelector(selectIsLoading);

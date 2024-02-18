@@ -6,8 +6,17 @@ import Home from 'pages/Home/Home';
 import ContactsPage from 'pages/Contacts/Contacts';
 import LogInPage from 'pages/LogIn/LogIn';
 import SignUpPage from 'pages/SignUp/SignUp';
+import { useDispatch } from 'react-redux';
+import { current } from '../redux/auth/auth-operations';
+import { useEffect } from 'react';
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(current());
+  }, [dispatch]);
+
   return (
     <ChakraProvider>
       <Routes>

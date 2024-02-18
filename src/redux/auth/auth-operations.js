@@ -1,7 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-import { signUpRequest, logInRequest } from 'api/auth-service';
+import {
+  signUpRequest,
+  logInRequest,
+  checkTokenRequest,
+} from 'api/auth-service';
 
 export const signUp = createAsyncThunk(
   'auth/signUp',
@@ -10,6 +14,11 @@ export const signUp = createAsyncThunk(
       const response = await signUpRequest(body);
       return response.data;
     } catch (error) {
+      if (error.response.data.code === 11000) {
+        Notify.failure(`User with email "${body.email}" already exists`);
+        return rejectWithValue(error.response.data.message);
+      }
+
       console.error(error.message);
       Notify.failure(error.response.data.message);
       return rejectWithValue(error.response.data.message);
@@ -28,5 +37,29 @@ export const logIn = createAsyncThunk(
       Notify.failure(error.response.data.message);
       return rejectWithValue(error.response.data.message);
     }
+  }
+);
+
+export const current = createAsyncThunk(
+  'auth/current',
+  async (_, { rejectWithValue, getState }) => {
+    try {
+      const { auth } = getState();
+      const response = await checkTokenRequest(auth.token);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error(error.message);
+      Notify.failure(error.response.data.message);
+      return rejectWithValue(error.response.data.message);
+    }
+  },
+  {
+    condition: (_, { getState }) => {
+      const { auth } = getState();
+      if (!auth.token) {
+        return false;
+      }
+    },
   }
 );
