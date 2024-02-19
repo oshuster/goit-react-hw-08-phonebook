@@ -6,7 +6,7 @@ import { selectAllContacts } from '../../redux/contacts/contacts-selectors';
 import css from './contactForm.module.css';
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState({ name: '', phone: '' });
+  const [formData, setFormData] = useState({ name: '', number: '' });
   const contacts = useSelector(selectAllContacts);
   const dispatch = useDispatch();
 
@@ -22,13 +22,13 @@ const ContactForm = () => {
   const saveContact = e => {
     e.preventDefault();
     // перевірка на коректність введених даних
-    if (regExpPattern.name.test(name) && regExpPattern.phone.test(phone)) {
+    if (regExpPattern.name.test(name) && regExpPattern.phone.test(number)) {
       // перевірка на наявність контакту по номеру
-      if (!contacts.some(contact => contact.phone === phone)) {
+      if (!contacts.some(contact => contact.number === number)) {
         dispatch(postContact(formData));
         setFormData({
           name: '',
-          phone: '',
+          number: '',
         });
       } else {
         alert('Такий контакт вже існує');
@@ -45,7 +45,7 @@ const ContactForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const { name, phone } = formData;
+  const { name, number } = formData;
   return (
     <form className={css.save_form} onSubmit={saveContact}>
       <div className="mb-3">
@@ -73,8 +73,8 @@ const ContactForm = () => {
           type="tel"
           className="form-control"
           id="exampleInputPhone1"
-          name="phone"
-          value={phone}
+          name="number"
+          value={number}
           onChange={handleInput}
           required
         />
