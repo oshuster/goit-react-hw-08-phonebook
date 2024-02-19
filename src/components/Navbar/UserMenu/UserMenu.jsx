@@ -19,6 +19,7 @@ const UserMenu = () => {
           {email}
         </Text>
         <Button
+          ml="65%"
           colorScheme="teal"
           size="xs"
           variant="outline"

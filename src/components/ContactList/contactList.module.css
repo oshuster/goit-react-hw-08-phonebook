@@ -12,15 +12,18 @@
   background-color: var(--bs-list-group-bg);
   border: var(--bs-list-group-border-width) solid
     var(--bs-list-group-border-color);
+
+  margin-bottom: 10px;
+  border-radius: 5px;
 }
 
-.list_item:first-child {
+/* .list_item:first-child {
   border-radius: 5px 5px 0 0;
 }
 
 .list_item:last-child {
   border-radius: 0 0 5px 5px;
-}
+} */
 
 .list_title {
   margin-right: auto;

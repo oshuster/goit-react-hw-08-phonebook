@@ -11,6 +11,7 @@ import {
 } from '../../redux/auth/auth-selectors';
 
 import styles from './signup.module.css';
+import DividerComponent from 'components/Divider/Divider';
 
 const SignUpPage = () => {
   const authLoading = useSelector(selectIsLoading);
@@ -27,6 +28,7 @@ const SignUpPage = () => {
 
   return (
     <div className={styles.container}>
+      <DividerComponent text="SignUp" />
       <SignUpForm onSubmit={handleSubmit} />
       {authLoading && <Loader />}
     </div>

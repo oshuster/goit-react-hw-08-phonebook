@@ -8,9 +8,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import styles from './navbar.module.css';
 import { selectIsLogin } from '../../redux/auth/auth-selectors';
-import { NavDropdown } from 'react-bootstrap';
 
 const Header = () => {
   const isLogin = useSelector(selectIsLogin);

@@ -11,12 +11,14 @@ const initialState = {
   isLoading: false,
   error: null,
   isEdit: false,
+  needReset: false,
   idEdit: '',
 };
 
 const handlePending = state => {
   state.isLoading = true;
   state.error = null;
+  state.needReset = false;
 };
 
 const handleRejected = (state, { payload }) => {
@@ -38,6 +40,11 @@ const contactsSlice = createSlice({
         state.idEdit = payload;
       },
     },
+    setNeedReset: {
+      reducer(state, { payload }) {
+        state.needReset = payload;
+      },
+    },
   },
   extraReducers: builder => {
     builder
@@ -52,6 +59,7 @@ const contactsSlice = createSlice({
       .addCase(addContactAction.pending, handlePending)
       .addCase(addContactAction.fulfilled, (state, { payload }) => {
         state.isLoading = false;
+        state.needReset = true;
         state.items.push(payload);
       })
       .addCase(addContactAction.rejected, handleRejected)
@@ -66,12 +74,6 @@ const contactsSlice = createSlice({
       .addCase(editContactAction.pending, handlePending)
       .addCase(editContactAction.fulfilled, (state, { payload }) => {
         state.isLoading = false;
-        // state.items = state.items.reduce((prevValue, item) => {
-        //   if (item.id !== payload.id) {
-        //     return prevValue;
-        //   }
-        //   return { ...item, ...payload };
-        // });
         state.items = state.items.map(item => {
           if (item.id !== payload.id) {
             return item;
@@ -84,6 +86,7 @@ const contactsSlice = createSlice({
   },
 });
 
-export const { setIsEditAction, setIdAction } = contactsSlice.actions;
+export const { setIsEditAction, setIdAction, setNeedReset } =
+  contactsSlice.actions;
 
 export const contactsReducer = contactsSlice.reducer;

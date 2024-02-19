@@ -2,6 +2,7 @@ import ContactForm from 'components/ContactForm/ContactForm';
 import Filter from 'components/Filter/Filter';
 import ContactList from 'components/ContactList/ContactList';
 import Loader from 'components/Loader/Loader';
+import DividerComponent from 'components/Divider/Divider';
 
 import { fetchContacts } from '../../redux/contacts/contacts-operation';
 import { useDispatch, useSelector } from 'react-redux';
@@ -26,9 +27,9 @@ const ContactsPage = () => {
 
   return (
     <div className={styles.container}>
+      <DividerComponent text={'Contacts'} />
       {isEdit ? <EditForm /> : <ContactForm />}
-
-      <h2>Contacts</h2>
+      <DividerComponent text={'Contacts'} />
       <Filter />
       {isLoading && !error && <Loader />}
       {!isLoading && <ContactList />}

@@ -1,4 +1,3 @@
-import { Flex, Spacer } from '@chakra-ui/react';
 import Nav from 'react-bootstrap/Nav';
 import { NavLink } from 'react-router-dom';
 

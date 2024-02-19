@@ -5,6 +5,7 @@ import {
   InputGroup,
   Button,
   InputRightElement,
+  Box,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
@@ -27,7 +28,6 @@ const LogInForm = ({ onSubmit }) => {
   const handleSubmit = e => {
     e.preventDefault();
     onSubmit(formData);
-    setFormData(initState);
   };
 
   const { email, password } = formData;
@@ -61,10 +61,11 @@ const LogInForm = ({ onSubmit }) => {
           </InputRightElement>
         </InputGroup>
       </FormControl>
-
-      <Button colorScheme="teal" variant="solid" type="submit">
-        LogIn
-      </Button>
+      <Box display="flex" justifyContent="flex-end" width="100%">
+        <Button colorScheme="teal" variant="solid" type="submit">
+          LogIn
+        </Button>
+      </Box>
     </form>
   );
 };

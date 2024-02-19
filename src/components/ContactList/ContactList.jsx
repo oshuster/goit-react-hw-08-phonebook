@@ -5,7 +5,7 @@ import {
   selectIsEdit,
 } from '../../redux/contacts/contacts-selectors';
 import { delContactById } from '../../redux/contacts/contacts-operation';
-import { Button, Stack } from '@chakra-ui/react';
+import { Avatar, Box, Text, Flex, IconButton, Stack } from '@chakra-ui/react';
 import { DeleteIcon, EditIcon } from '@chakra-ui/icons';
 import {
   setIdAction,
@@ -18,41 +18,54 @@ const ContactList = () => {
   const dispatch = useDispatch();
 
   const deleteContact = ({ target }) => {
-    const id = target.dataset.id;
+    const button = target.closest('.deleteItem');
+    const id = button.dataset.id;
     dispatch(delContactById(id));
   };
 
   const editContact = ({ target }) => {
+    const button = target.closest('.editItem');
     dispatch(setIsEditAction(true));
-    dispatch(setIdAction(target.dataset.id));
+    dispatch(setIdAction(button.dataset.id));
   };
 
   const elements = contactlist.map(item => (
     <li key={item.id} className={css.list_item}>
-      <span className={css.list_title}>
-        {item.name}: {item.number}
-      </span>
-      <Stack direction="row" spacing={4}>
-        <Button
-          leftIcon={<DeleteIcon />}
+      <Flex mr="auto" alignItems="center">
+        <Avatar name={item.name} src="" bg="teal.500" />
+        <Box ml="3" alignItems="center">
+          <Text fontWeight="bold" mb="1">
+            {item.name}
+          </Text>
+          <Text fontSize="sm" m="0">
+            {item.number}
+          </Text>
+        </Box>
+      </Flex>
+      <Stack direction="column" spacing={2}>
+        <IconButton
+          className="deleteItem"
           colorScheme="teal"
-          variant="solid"
+          aria-label="Delete contact"
+          size="sm"
+          isRound={true}
+          icon={<DeleteIcon />}
           data-id={item.id}
           onClick={deleteContact}
           isDisabled={isEdit}
-        >
-          Delete
-        </Button>
-        <Button
-          rightIcon={<EditIcon />}
-          colorScheme="teal"
+        />
+        <IconButton
+          className="editItem"
           variant="outline"
+          colorScheme="teal"
+          aria-label="Edit contact"
+          size="sm"
+          isRound={true}
+          icon={<EditIcon />}
           data-id={item.id}
           onClick={editContact}
           isDisabled={isEdit}
-        >
-          Edit
-        </Button>
+        />
       </Stack>
     </li>
   ));

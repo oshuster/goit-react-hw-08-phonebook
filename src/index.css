@@ -13,3 +13,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'Kode Mono', monospace;
+  src: local('Kode Mono'),
+    url('./fonts//static/KodeMono-Bold.ttf') format('truetype');
+  font-weight: bold;
+}

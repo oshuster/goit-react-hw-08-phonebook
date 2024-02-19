@@ -33,9 +33,7 @@ export const addContactAction = createAsyncThunk(
       const response = await addContact(body);
       return response.data;
     } catch (error) {
-      Notify.failure('Whoops. Something went wrong... <br/> Try again!!!', {
-        position: 'center-top',
-      });
+      Notify.failure('Whoops. Something went wrong... <br/> Try again!!!');
       console.error(error.message);
       return rejectWithValue(error.response.data.message);
     }
@@ -45,14 +43,13 @@ export const addContactAction = createAsyncThunk(
 export const delContactById = createAsyncThunk(
   'contacts/deleteContact',
   async (id, { rejectWithValue }) => {
+    console.log(id);
     try {
       const response = await delContact(id);
-      Notify.success(`Delete contact: ${response.data.name}. Success!`, {
-        position: 'center-top',
-      });
+      Notify.success(`Delete contact: ${response.data.name}. Success!`);
       return response.data.id;
     } catch (error) {
-      Notify.failure('Contact not found :(', { position: 'center-top' });
+      Notify.failure('Contact not found :(');
       console.error(error.message);
       return rejectWithValue(error.response.data.message);
     }

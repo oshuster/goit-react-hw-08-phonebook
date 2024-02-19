@@ -21,3 +21,5 @@ export const selectIsEdit = store => store.contacts.isEdit;
 
 export const selectEditContact = store =>
   store.contacts.items.find(item => item.id === store.contacts.idEdit);
+
+export const needReset = store => store.contacts.needReset;

@@ -7,19 +7,28 @@ import {
 } from '../../redux/contacts/contacts-selectors';
 import { regExpPattern } from 'regexp/regexp';
 
-import css from './editForm.module.css';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Input,
+} from '@chakra-ui/react';
+import {
+  setIdAction,
+  setIsEditAction,
+} from '../../redux/contacts/contactsSlice';
+
+const initState = { name: '', number: '' };
 
 const EditForm = () => {
-  const [formData, setFormData] = useState({ name: '', number: '' });
+  const [formData, setFormData] = useState(initState);
 
   const contacts = useSelector(selectAllContacts);
   const editData = useSelector(selectEditContact);
 
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    setFormData({ name: editData.name, number: editData.number });
-  }, [editData]);
 
   const editContact = e => {
     e.preventDefault();
@@ -28,10 +37,7 @@ const EditForm = () => {
       // перевірка на наявність контакту по номеру
       if (!contacts.some(contact => contact.number === number)) {
         dispatch(editContactAction({ id: editData.id, body: { ...formData } }));
-        setFormData({
-          name: '',
-          number: '',
-        });
+        // setFormData(initState);
       } else {
         alert('Такий контакт вже існує');
         return;
@@ -42,48 +48,57 @@ const EditForm = () => {
     }
   };
 
+  const cancelChange = () => {
+    setFormData(initState);
+    dispatch(setIsEditAction(false));
+    dispatch(setIdAction(''));
+  };
+
   const handleInput = e => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  useEffect(() => {
+    setFormData({ name: editData.name, number: editData.number });
+  }, [editData]);
+
   const { name, number } = formData;
   return (
-    <form className={css.save_form} onSubmit={editContact}>
-      <div className="mb-3">
-        <label htmlFor="exampleInputName1" className="form-label">
-          Name
-        </label>
-        <input
-          type="text"
+    <form onSubmit={editContact}>
+      <FormControl isRequired mb={15}>
+        <FormLabel>Name</FormLabel>
+        <Input
+          placeholder="Name"
           name="name"
           value={name}
-          className="form-control"
-          aria-describedby="nameHelp"
-          required
           onChange={handleInput}
         />
-        <div id="nameHelp" className="form-text">
-          Please edit contact fields.
-        </div>
-      </div>
-      <div className="mb-3">
-        <label htmlFor="exampleInputPhone1" className="form-label">
-          Phone number
-        </label>
-        <input
+        <FormHelperText>Please edit contact fields.</FormHelperText>
+      </FormControl>
+      <FormControl isRequired mb={15}>
+        <FormLabel>Number</FormLabel>
+        <Input
           type="tel"
-          className="form-control"
-          id="exampleInputPhone1"
+          placeholder="+380912345678"
           name="number"
           value={number}
           onChange={handleInput}
-          required
         />
-      </div>
-      <button type="submit" className="btn btn-primary">
-        Edit contact
-      </button>
+      </FormControl>
+      <Box display="flex" justifyContent="space-between" width="100%">
+        <Button
+          colorScheme="teal"
+          variant="solid"
+          type="button"
+          onClick={cancelChange}
+        >
+          Cancel
+        </Button>
+        <Button colorScheme="teal" variant="solid" type="submit">
+          Save changes
+        </Button>
+      </Box>
     </form>
   );
 };
