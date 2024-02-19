@@ -38,6 +38,7 @@ export const checkTokenRequest = async token => {
 
 export const logOutRequest = async () => {
   const response = await instance.post('/users/logout');
+  setToken();
   return response;
 };
 

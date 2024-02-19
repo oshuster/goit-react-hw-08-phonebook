@@ -17,11 +17,10 @@ export const signUp = createAsyncThunk(
     } catch (error) {
       if (error.response.data.code === 11000) {
         Notify.failure(`User with email "${body.email}" already exists`);
-        return rejectWithValue(error.response.data.message);
       }
-
-      console.error(error.message);
-      Notify.failure(error.response.data.message);
+      if (error.response.data.message.includes('password')) {
+        Notify.failure('Password is shorter than the minimum allowed length 7');
+      }
       return rejectWithValue(error.response.data.message);
     }
   }
@@ -35,7 +34,11 @@ export const logIn = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.error(error.message);
-      Notify.failure(error.response.data.message);
+      if (error.response.status === 400) {
+        Notify.failure('Incorrect data. Try again');
+      } else {
+        Notify.failure(error.response.data.message);
+      }
       return rejectWithValue(error.response.data.message);
     }
   }
