@@ -11,3 +11,7 @@ export const delContact = id => {
 export const addContact = body => {
   return instance.post('/contacts', body);
 };
+
+export const editContact = ({ id, body }) => {
+  return instance.patch(`/contacts/${id}`, body);
+};

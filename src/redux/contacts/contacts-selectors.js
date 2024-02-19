@@ -12,7 +12,12 @@ export const selectFilteredContacts = store => {
     return contacts.items.filter(
       contact =>
         contact.name.toLowerCase().includes(filter) ||
-        contact.phone.includes(filter)
+        contact.number.includes(filter)
     );
   }
 };
+
+export const selectIsEdit = store => store.contacts.isEdit;
+
+export const selectEditContact = store =>
+  store.contacts.items.find(item => item.id === store.contacts.idEdit);

@@ -1,14 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchContacts,
-  postContact,
+  addContactAction,
   delContactById,
+  editContactAction,
 } from './contacts-operation';
 
 const initialState = {
   items: [],
   isLoading: false,
   error: null,
+  isEdit: false,
+  idEdit: '',
 };
 
 const handlePending = state => {
@@ -24,6 +27,18 @@ const handleRejected = (state, { payload }) => {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
+  reducers: {
+    setIsEditAction: {
+      reducer(state, { payload }) {
+        state.isEdit = payload;
+      },
+    },
+    setIdAction: {
+      reducer(state, { payload }) {
+        state.idEdit = payload;
+      },
+    },
+  },
   extraReducers: builder => {
     builder
       //fetchContacts
@@ -34,20 +49,41 @@ const contactsSlice = createSlice({
       })
       .addCase(fetchContacts.rejected, handleRejected)
       //addContact
-      .addCase(postContact.pending, handlePending)
-      .addCase(postContact.fulfilled, (state, { payload }) => {
+      .addCase(addContactAction.pending, handlePending)
+      .addCase(addContactAction.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.items.push(payload);
       })
-      .addCase(postContact.rejected, handleRejected)
+      .addCase(addContactAction.rejected, handleRejected)
       //deleteContactById
       .addCase(delContactById.pending, handlePending)
       .addCase(delContactById.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.items = state.items.filter(contact => contact.id !== payload);
       })
-      .addCase(delContactById.rejected, handleRejected);
+      .addCase(delContactById.rejected, handleRejected)
+      //editContact
+      .addCase(editContactAction.pending, handlePending)
+      .addCase(editContactAction.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        // state.items = state.items.reduce((prevValue, item) => {
+        //   if (item.id !== payload.id) {
+        //     return prevValue;
+        //   }
+        //   return { ...item, ...payload };
+        // });
+        state.items = state.items.map(item => {
+          if (item.id !== payload.id) {
+            return item;
+          }
+          return { ...item, ...payload };
+        });
+        state.isEdit = false;
+      })
+      .addCase(editContactAction.rejected, handleRejected);
   },
 });
+
+export const { setIsEditAction, setIdAction } = contactsSlice.actions;
 
 export const contactsReducer = contactsSlice.reducer;

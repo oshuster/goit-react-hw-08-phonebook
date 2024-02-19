@@ -1,11 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getContacts, addContact, delContact } from 'api/phoneBookService';
+import {
+  getContacts,
+  addContact,
+  delContact,
+  editContact,
+} from 'api/phoneBookService';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Report } from 'notiflix/build/notiflix-report-aio';
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
-  async (_, thunkAPI) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await getContacts();
       return response.data;
@@ -16,14 +21,14 @@ export const fetchContacts = createAsyncThunk(
         'Okay'
       );
       console.error(error.message);
-      return thunkAPI.rejectWithValue(error.message);
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
 
-export const postContact = createAsyncThunk(
+export const addContactAction = createAsyncThunk(
   'contacts/addContact',
-  async (body, thunkAPI) => {
+  async (body, { rejectWithValue }) => {
     try {
       const response = await addContact(body);
       return response.data;
@@ -32,14 +37,14 @@ export const postContact = createAsyncThunk(
         position: 'center-top',
       });
       console.error(error.message);
-      return thunkAPI.rejectWithValue(error.message);
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
 
 export const delContactById = createAsyncThunk(
   'contacts/deleteContact',
-  async (id, thunkAPI) => {
+  async (id, { rejectWithValue }) => {
     try {
       const response = await delContact(id);
       Notify.success(`Delete contact: ${response.data.name}. Success!`, {
@@ -49,7 +54,20 @@ export const delContactById = createAsyncThunk(
     } catch (error) {
       Notify.failure('Contact not found :(', { position: 'center-top' });
       console.error(error.message);
-      return thunkAPI.rejectWithValue(error.message);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const editContactAction = createAsyncThunk(
+  'contacts/editContact',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await editContact(data);
+      return response.data;
+    } catch (error) {
+      console.error(error.message);
+      return rejectWithValue(error.response.data.message);
     }
   }
 );

@@ -9,21 +9,25 @@ import { useEffect } from 'react';
 import {
   selectIsLoading,
   selectError,
+  selectIsEdit,
 } from '../../redux/contacts/contacts-selectors';
 
 import styles from './contacts.module.css';
+import EditForm from 'components/EditForm/EditForm';
 
 const ContactsPage = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
+  const isEdit = useSelector(selectIsEdit);
   const error = useSelector(selectError);
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
-  // useEffect(() => {
-  //   dispatch(fetchContacts());
-  // }, [dispatch]);
   return (
     <div className={styles.container}>
-      <ContactForm />
+      {isEdit ? <EditForm /> : <ContactForm />}
+
       <h2>Contacts</h2>
       <Filter />
       {isLoading && !error && <Loader />}
