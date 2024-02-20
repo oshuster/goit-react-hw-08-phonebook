@@ -8,6 +8,7 @@ import LogInPage from 'pages/LogIn/LogIn';
 import SignUpPage from 'pages/SignUp/SignUp';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 import PublicRoute from './PublicRoute/PublicRoute';
+import NotFoundPage from 'pages/NotFound/NotFound';
 
 const AppRoutes = () => {
   return (
@@ -22,6 +23,7 @@ const AppRoutes = () => {
             <Route path="login" element={<LogInPage />} />
             <Route path="signup" element={<SignUpPage />} />
           </Route>
+          <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
     </ChakraProvider>
