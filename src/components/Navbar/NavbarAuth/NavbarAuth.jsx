@@ -5,10 +5,10 @@ const NavbarAuth = () => {
   return (
     <>
       <Nav.Link as={NavLink} to="login">
-        LogIn
+        Log In
       </Nav.Link>
       <Nav.Link as={NavLink} to="signup">
-        SignUp
+        Sign Up
       </Nav.Link>
     </>
   );
