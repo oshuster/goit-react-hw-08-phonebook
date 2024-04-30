@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.d74febeb.css",
-    "main.js": "/static/js/main.629fe80d.js",
-    "static/media/KodeMono-Regular.ttf": "/static/media/KodeMono-Regular.c0dd9e914cf1e5050c5f.ttf",
-    "static/media/KodeMono-Bold.ttf": "/static/media/KodeMono-Bold.dd416a51d1b71c205661.ttf",
-    "static/media/phone-book.svg": "/static/media/phone-book.28209bd94540ee65b190e057d28196ca.svg",
-    "index.html": "/index.html",
-    "main.d74febeb.css.map": "/static/css/main.d74febeb.css.map",
-    "main.629fe80d.js.map": "/static/js/main.629fe80d.js.map"
+    "main.css": "/goit-react-hw-08-phonebook/static/css/main.664bf9e7.css",
+    "main.js": "/goit-react-hw-08-phonebook/static/js/main.9c95d2cf.js",
+    "static/media/KodeMono-Regular.ttf": "/goit-react-hw-08-phonebook/static/media/KodeMono-Regular.c0dd9e914cf1e5050c5f.ttf",
+    "static/media/KodeMono-Bold.ttf": "/goit-react-hw-08-phonebook/static/media/KodeMono-Bold.dd416a51d1b71c205661.ttf",
+    "static/media/phone-book.svg": "/goit-react-hw-08-phonebook/static/media/phone-book.28209bd94540ee65b190e057d28196ca.svg",
+    "index.html": "/goit-react-hw-08-phonebook/index.html",
+    "main.664bf9e7.css.map": "/goit-react-hw-08-phonebook/static/css/main.664bf9e7.css.map",
+    "main.9c95d2cf.js.map": "/goit-react-hw-08-phonebook/static/js/main.9c95d2cf.js.map"
   },
   "entrypoints": [
-    "static/css/main.d74febeb.css",
-    "static/js/main.629fe80d.js"
+    "static/css/main.664bf9e7.css",
+    "static/js/main.9c95d2cf.js"
   ]
 }
